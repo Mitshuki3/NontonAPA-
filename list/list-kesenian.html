@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Film Joko Songo Angkat Kisah Kepahlawanan Pemuda Karanganyar - Nonton Apa?</title>
+  <title>List Kesenian - Nonton Apa?</title>
   <style>
     * {
       margin: 0;
@@ -158,10 +158,10 @@
       cursor: pointer;
     }
 
-    /* News Hero */
-    .news-hero {
-      height: 80vh;
-      min-height: 600px;
+    /* Page Hero */
+    .page-hero {
+      height: 60vh;
+      min-height: 400px;
       position: relative;
       overflow: hidden;
       display: flex;
@@ -170,7 +170,7 @@
       text-align: center;
     }
 
-    .news-hero::after {
+    .page-hero::after {
       content: "";
       position: absolute;
       inset: 0;
@@ -178,33 +178,23 @@
       z-index: 2;
     }
 
-    .news-hero-bg {
+    .page-hero-bg {
       position: absolute;
       inset: 0;
       background-size: cover;
       background-position: center;
+      background-image: url('../foto/kesenian-bg.jpeg'); /* Ganti dengan gambar kesenian Karanganyar */
     }
 
-    .news-hero-content {
+    .page-hero-content h1 {
       position: relative;
       z-index: 3;
-      max-width: 90%;
-    }
-
-    .news-hero-content h1 {
       font-size: clamp(3rem, 10vw, 6rem);
       font-weight: 900;
       color: #f0f0f0;
       text-transform: uppercase;
       text-shadow: 0 0 15px #fff;
-      margin-bottom: 20px;
       animation: glitch 6s infinite alternate;
-    }
-
-    .news-date {
-      font-size: 1.2rem;
-      color: #ccc;
-      margin-bottom: 20px;
     }
 
     @keyframes glitch {
@@ -216,41 +206,85 @@
       100% { transform: translate(0); }
     }
 
-    /* News Content */
-    .news-detail-section {
+    /* Kesenian List */
+    .kesenian-list-section {
       padding: 120px 5% 100px;
       background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95));
-      max-width: 1200px;
+    }
+
+    .kesenian-list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      max-width: 1400px;
       margin: 0 auto;
     }
 
-    .news-content {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      color: #ccc;
-      text-align: justify;
-    }
-
-    .news-content p {
-      margin-bottom: 25px;
-    }
-
-    .news-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 50px;
-    }
-
-    .news-gallery img {
-      width: 100%;
+    .kesenian-item {
+      background: rgba(20,20,20,0.92);
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(180,0,0,0.7);
-      transition: transform 0.4s ease;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
 
-    .news-gallery img:hover {
-      transform: scale(1.05);
+    .kesenian-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(180,0,0,0.4);
+    }
+
+    .kesenian-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .kesenian-item-info {
+      padding: 20px;
+    }
+
+    .kesenian-item-title {
+      font-size: 1.8rem;
+      color: #c00;
+      margin-bottom: 12px;
+    }
+
+    .kesenian-item-excerpt {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+      color: #bbb;
+    }
+
+    .kesenian-item-more {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #c00;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 0.95rem;
+      transition: background 0.3s;
+    }
+
+    .kesenian-item-more:hover {
+      background: #ff4444;
+    }
+
+    .youtube-embed {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    .youtube-embed iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
 
     /* Responsive */
@@ -258,8 +292,6 @@
       .nav-menu { display: none; }
       .hamburger { display: block; }
       .navbar { padding: 1rem 6%; }
-      .news-content { font-size: 1.1rem; }
-      .news-gallery { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -269,11 +301,11 @@
   <nav class="navbar">
     <div class="logo">NONTON APA?</div>
     <div class="nav-menu">
-      <a href="../../index.html">HOME</a>
-      <a href="../list-film.html">FILM</a>
-      <a href="../../index.html#kesenian-section">KESENIAN</a>
+      <a href="../index.html#hero">HOME</a>
+      <a href="../index.html#film-section">FILM</a>
+      <a href="list-kesenian.html" class="active">KESENIAN</a>
       <a href="#">JADWAL TAYANG</a>
-      <a href="../../index.html#news-section" class="active">NEWS</a>
+      <a href="../index.html#news-section">NEWS</a>
     </div>
     <button class="hamburger" id="hamburgerBtn">
       <span></span>
@@ -285,70 +317,56 @@
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <button class="close-btn" id="closeBtn">×</button>
-    <a href="../../index.html">HOME</a>
-    <a href="../list-film.html">FILM</a>
-    <a href="../../index.html#kesenian-section">KESENIAN</a>
+    <a href="../index.html#hero">HOME</a>
+    <a href="../index.html#film-section">FILM</a>
+    <a href="list-kesenian.html">KESENIAN</a>
     <a href="#">JADWAL TAYANG</a>
-    <a href="../../index.html#news-section" class="active">NEWS</a>
+    <a href="../index.html#news-section">NEWS</a>
   </div>
 
-<grok-card data-id="002b39" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+  <!-- Page Hero -->
+  <section class="page-hero fade-section">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-content">
+      <h1> KESENIAN</h1>
+    </div>
+  </section>
 
+  <!-- Kesenian List Section -->
+  <section class="kesenian-list-section fade-section">
+    <div class="kesenian-list-grid">
+      <!-- Item 1: Teater Tenda -->
+      <div class="kesenian-item">
+        <img src="../foto/teater-tenda.jpeg" alt="Teater Tenda SMA N 2 Karanganyar">
+        <div class="kesenian-item-info">
+          <h3 class="kesenian-item-title">TEATER TENDA</h3>
+          <p class="kesenian-item-excerpt">Teater Tenda merupakan kelompok teater yang ada di SMA N 2 Karanganyar. Di bawah naungan kelompok teater pelajar (KETAPEL) Karanganyar, Teater Tenda cukup konsisten menyajikan pentas produksi.<br><br>Ini menunjukkan bahwa di Karanganyar, seni teatrikal sebuah teater masih dilestarikan dan ditampilkan di tengah gempuran hiburan media modern.</p>
+          <div class="youtube-embed">
+            <iframe
+            src="https://www.youtube.com/embed/P4F8TO6f7as?rel=0&modestbranding=1"
+            title="Video Teater Tenda"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+            </div>
+          <a href="https://youtu.be/P4F8TO6f7as" target="_blank" class="kesenian-item-more">Tonton Video →</a>
+        </div>
+      </div>
 
-<!-- News Hero -->
-<section class="news-hero fade-section">
-  <div class="news-hero-bg"></div>
-  <div class="news-hero-content">
-    <h1>Film Joko Songo Angkat Kisah Kepahlawanan Pemuda Karanganyar</h1>
-    <div class="news-date">09 Januari 2026</div>
-    <p>Film drama historis lokal yang mengisahkan perjuangan sembilan pemuda melawan penjajah Belanda.</p>
-  </div>
-</section>
+      <!-- Item 2: Festival Reog Hari Jadi Karanganyar -->
+      <div class="kesenian-item">
+        <img src="../foto/kesenian1-1.jpeg" alt="Festival Reog Jalan Lawu Karanganyar 2025">
+        <div class="kesenian-item-info">
+          <h3 class="kesenian-item-title">FESTIVAL REOG & JARAN BIGAR - HARI JADI KE-108 KARANGANYAR</h3>
+          <p class="kesenian-item-excerpt">Perayaan Hari Jadi ke-108 Kabupaten Karanganyar pada 14 November 2025 berlangsung meriah, dengan Jalan Lawu disulap menjadi panggung budaya terbesar. Ribuan warga menyaksikan penampilan 12 grup Reog dan 25 kelompok Jaran Bigar.<br><br>Puncak acara: Pemecahan rekor MURI dengan 360 unit sound system serentak sepanjang 5 km, simbol komitmen pelestarian seni budaya daerah dan kebersamaan warga.</p>
+          <a href="kesenian/FESTIVAL-REOG.html" class="kesenian-item-more">Selengkapnya →</a>
+        </div>
+      </div>
 
-<!-- News Detail -->
-<section class="news-detail-section fade-section">
-  <div class="news-content">
-    <p>
-      <strong>Joko Songo</strong> merupakan film bergenre drama historis yang mengangkat kisah kepahlawanan sembilan pemuda asal Karanganyar, Jawa Tengah. Film ini terinspirasi dari peristiwa nyata perjuangan rakyat melawan penjajah Belanda pada masa pasca Proklamasi Kemerdekaan Indonesia.
-    </p>
-
-    <p>
-      Judul <em>Joko Songo</em> berasal dari bahasa Jawa yang berarti “Jejaka Sembilan”. Cerita berfokus pada sembilan pemuda yang tergabung dalam pasukan Alap-Alap dan berjuang mempertahankan kemerdekaan pada tahun 1948.
-    </p>
-
-    <p>
-      Latar perjuangan film ini berada di wilayah Kecamatan Karangpandan dan Matesih, Kabupaten Karanganyar. Kedua wilayah tersebut menjadi saksi bisu perjuangan gigih para pemuda dalam menghadapi tentara Belanda.
-    </p>
-
-    <p>
-      Film ini juga menjadi media edukasi sejarah bagi generasi muda, sekaligus bentuk penghormatan terhadap para pejuang yang gugur di kawasan Doplang dan Pablengan. Hingga kini, semangat perjuangan tersebut dikenang melalui Tugu Joko Songo di Kecamatan Matesih.
-    </p>
-  </div>
-
-  <h2 style="font-size:2.5rem; color:#c00; text-align:center; margin:60px 0 40px; text-transform:uppercase;">
-    Galeri Foto Film Joko Songo
-  </h2>
-
-  <div class="news-gallery" style="display:flex; justify-content:center; margin-bottom:40px;">
-    <img 
-      src="../../foto/film1.jpeg" 
-      alt="Film Joko Songo"
-      style="
-        max-width:80%;
-        border-radius:8px;
-        box-shadow:0 4px 12px rgba(0,0,0,0.4);
-      "
-    >
-  </div>
-
-  <div style="background-color:red; padding:10px 16px; border-radius:6px; display:inline-block;">
-    <a href="../list-news.html" style="color:white; text-decoration:none; font-weight:bold;">
-      Kembali Ke News
-    </a>
-</div>
-
-</section>
-
+      <!-- Tambah item kesenian lain jika perlu -->
+    </div>
+  </section>
 
   <script>
     // Hamburger Menu

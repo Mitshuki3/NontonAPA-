@@ -334,6 +334,48 @@
       background: #ff4444;
     }
 
+    /* Kesenian Grid (baru) */
+    .kesenian-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .kesenian-card {
+      background: rgba(20,20,20,0.92);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.4s ease;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
+
+    .kesenian-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(180,0,0,0.3);
+    }
+
+    .kesenian-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .kesenian-info {
+      padding: 20px;
+    }
+
+    .kesenian-title {
+      font-size: 1.6rem;
+      color: #c00;
+      margin-bottom: 10px;
+    }
+
+    .kesenian-excerpt {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
     /* Social Sidebar */
     .social-box {
       position: fixed;
@@ -373,6 +415,7 @@
       .news-grid { grid-template-columns: 1fr; }
       .news-big img { height: 180px; }
       .film-card img { height: 180px; }
+      .kesenian-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -384,9 +427,9 @@
     <div class="nav-menu">
       <a href="#hero" class="active">HOME</a>
       <a href="#film-section">FILM</a>
-      <a href="#news-section">NEWS</a>
-      <a href="#">KESENIAN</a>
+      <a href="#kesenian-section">KESENIAN</a>
       <a href="#">JADWAL TAYANG</a>
+      <a href="#news-section">NEWS</a>
     </div>
     <button class="hamburger" id="hamburgerBtn">
       <span></span>
@@ -400,9 +443,9 @@
     <button class="close-btn" id="closeBtn">×</button>
     <a href="#hero">HOME</a>
     <a href="#film-section">FILM</a>
-    <a href="#news-section">NEWS</a>
-    <a href="#">KESENIAN</a>
+    <a href="#kesenian-section">KESENIAN</a>
     <a href="#">JADWAL TAYANG</a>
+    <a href="#news-section">NEWS</a>
   </div>
 
   <!-- Hero -->
@@ -451,6 +494,37 @@
       <a href="list/list-film.html">Lihat Semua Film →</a>
     </div>
   </section>
+
+    <!-- Kesenian Section (BARU) -->
+    <section class="section fade-section" id="kesenian-section">
+      <h2 class="section-title">KESENIAN</h2>
+      <div class="kesenian-grid">
+        <!-- Teater Tenda -->
+        <div class="kesenian-card">
+  
+  
+          <div class="kesenian-info">
+            <h3 class="kesenian-title">TEATER TENDA</h3>
+            <p class="kesenian-excerpt">Kelompok teater pelajar SMA N 2 Karanganyar yang konsisten menyajikan pentas produksi di tengah gempuran hiburan modern.</p>
+            <a href="list/list-kesenian.html" class="card-more">Selengkapnya →</a>
+          </div>
+        </div>
+  
+        <!-- Festival Reog & Jaran Bigar -->
+        <div class="kesenian-card">
+  
+  
+          <div class="kesenian-info">
+            <h3 class="kesenian-title">FESTIVAL REOG & JARAN BIGAR</h3>
+            <p class="kesenian-excerpt">Hari Jadi ke-108 Karanganyar (2025): Jalan Lawu jadi panggung besar dengan parade Reog, Jaran Bigar, dan rekor MURI 360 sound system.</p>
+            <a href="list/list-kesenian.html" class="card-more">Selengkapnya →</a>
+          </div>
+        </div>
+      </div>
+      <div class="section-more">
+        <a href="list/list-kesenian.html">Lihat Semua Kesenian →</a>
+      </div>
+    </section>
 
   <!-- News Section -->
   <section class="section fade-section" id="news-section">
@@ -510,7 +584,6 @@
       <a href="list/list-news.html">Lihat Semua News →</a>
     </div>
   </section>
-  
 
   <!-- Social Box -->
   <div class="social-box">
@@ -524,14 +597,14 @@
     // === ACTIVE NAV LINK BERDASARKAN SECTION ===
     const navLinks = document.querySelectorAll('.nav-menu a');
 
-    const sectionIds = ['hero', 'film-section', 'news-section'];
+    const sectionIds = ['hero', 'film-section', 'news-section', 'kesenian-section']; // tambah kesenian
     const sections = sectionIds
       .map(id => document.getElementById(id))
       .filter(section => section !== null);
 
     const observerOptions = {
       root: null,
-      rootMargin: '-120px 0px -50% 0px', // disesuaikan agar lebih responsif
+      rootMargin: '-120px 0px -50% 0px',
       threshold: 0.25
     };
 
@@ -626,5 +699,4 @@
     });
   </script>
 </body>
-
 </html>

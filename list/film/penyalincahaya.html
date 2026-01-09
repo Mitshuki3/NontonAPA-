@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Film Joko Songo Angkat Kisah Kepahlawanan Pemuda Karanganyar - Nonton Apa?</title>
+  <title>JOKO SONGO - Nonton Apa?</title>
   <style>
     * {
       margin: 0;
@@ -158,8 +158,8 @@
       cursor: pointer;
     }
 
-    /* News Hero */
-    .news-hero {
+    /* Page Hero */
+    .page-hero {
       height: 80vh;
       min-height: 600px;
       position: relative;
@@ -170,7 +170,7 @@
       text-align: center;
     }
 
-    .news-hero::after {
+    .page-hero::after {
       content: "";
       position: absolute;
       inset: 0;
@@ -178,33 +178,22 @@
       z-index: 2;
     }
 
-    .news-hero-bg {
+    .page-hero-bg {
       position: absolute;
       inset: 0;
       background-size: cover;
       background-position: center;
     }
 
-    .news-hero-content {
+    .page-hero-content h1 {
       position: relative;
       z-index: 3;
-      max-width: 90%;
-    }
-
-    .news-hero-content h1 {
-      font-size: clamp(3rem, 10vw, 6rem);
+      font-size: clamp(4rem, 12vw, 8rem);
       font-weight: 900;
       color: #f0f0f0;
       text-transform: uppercase;
-      text-shadow: 0 0 15px #fff;
-      margin-bottom: 20px;
-      animation: glitch 6s infinite alternate;
-    }
-
-    .news-date {
-      font-size: 1.2rem;
-      color: #ccc;
-      margin-bottom: 20px;
+      text-shadow: 0 0 15px #fff, 0 0 40px #333;
+      animation: glitch 5s infinite alternate;
     }
 
     @keyframes glitch {
@@ -216,40 +205,48 @@
       100% { transform: translate(0); }
     }
 
-    /* News Content */
-    .news-detail-section {
+    /* Detail Section */
+    .detail-section {
       padding: 120px 5% 100px;
       background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95));
       max-width: 1200px;
       margin: 0 auto;
     }
 
-    .news-content {
+    .detail-content {
       font-size: 1.2rem;
       line-height: 1.8;
       color: #ccc;
       text-align: justify;
     }
 
-    .news-content p {
-      margin-bottom: 25px;
+    .detail-content p {
+      margin-bottom: 20px;
     }
 
-    .news-gallery {
+    .detail-title {
+      font-size: 2.5rem;
+      color: #c00;
+      margin: 30px 0 20px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 30px;
-      margin-top: 50px;
+      margin-top: 20px;
     }
 
-    .news-gallery img {
+    .gallery img {
       width: 100%;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(180,0,0,0.7);
       transition: transform 0.4s ease;
     }
 
-    .news-gallery img:hover {
+    .gallery img:hover {
       transform: scale(1.05);
     }
 
@@ -258,8 +255,8 @@
       .nav-menu { display: none; }
       .hamburger { display: block; }
       .navbar { padding: 1rem 6%; }
-      .news-content { font-size: 1.1rem; }
-      .news-gallery { grid-template-columns: 1fr; }
+      .detail-content { font-size: 1.1rem; }
+      .gallery { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -270,10 +267,10 @@
     <div class="logo">NONTON APA?</div>
     <div class="nav-menu">
       <a href="../../index.html">HOME</a>
-      <a href="../list-film.html">FILM</a>
+      <a href="../list-film.html" class="active">FILM</a>
       <a href="../../index.html#kesenian-section">KESENIAN</a>
       <a href="#">JADWAL TAYANG</a>
-      <a href="../../index.html#news-section" class="active">NEWS</a>
+      <a href="../../index.html#news-section">NEWS</a>
     </div>
     <button class="hamburger" id="hamburgerBtn">
       <span></span>
@@ -289,66 +286,118 @@
     <a href="../list-film.html">FILM</a>
     <a href="../../index.html#kesenian-section">KESENIAN</a>
     <a href="#">JADWAL TAYANG</a>
-    <a href="../../index.html#news-section" class="active">NEWS</a>
+    <a href="../../index.html#news-section">NEWS</a>
   </div>
 
-<grok-card data-id="002b39" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+<!-- Page Hero dengan Poster Film Utama -->
+<section class="page-hero fade-section">
+    <div class="page-hero-bg" style="background-image: url('../../foto/film6.jpeg');"></div>
+    <div class="page-hero-content">
+      <h1>PENYALIN CAHAYA</h1>
+    </div>
+  </section>
+  
+  <!-- Detail Section -->
+  <section class="detail-section fade-section">
+    <h2 class="detail-title">Sinopsis & Tema</h2>
+    <div class="detail-content">
+      <p>
+        <strong>Penyalin Cahaya</strong> merupakan film drama Indonesia tahun 2021 karya sutradara
+        <strong>Wregas Bhanuteja</strong>. Film ini menghadirkan potret getir tentang perjuangan seorang
+        korban dalam mencari keadilan di tengah relasi kuasa yang timpang.
+      </p>
+  
+      <p>
+        Cerita berpusat pada Suryani, seorang mahasiswi yang hidupnya berubah drastis setelah sebuah
+        peristiwa di pesta kampus. Ia kehilangan beasiswa serta nama baiknya, dan dipaksa menghadapi
+        tekanan sosial yang membuatnya harus menyusun kembali ingatan demi menemukan kebenaran.
+      </p>
+  
+      <p>
+        Dalam pencariannya, Suryani tidak hanya berhadapan dengan trauma personal, tetapi juga dengan
+        sistem yang tidak peka dan cenderung melindungi pihak yang memiliki kuasa. Film ini menyampaikan
+        kritik sosial yang tajam terhadap bagaimana suara korban sering kali diabaikan.
+      </p>
+  
+      <p>
+        Secara visual, <em>Penyalin Cahaya</em> menggunakan pencahayaan gelap dan suasana sunyi untuk
+        memperkuat tekanan psikologis tokoh utama. Akting Shenina Cinnamon menjadi kekuatan utama film ini,
+        dengan ekspresi emosional yang kuat meski minim dialog.
+      </p>
+  
+      <p>
+        Film ini juga menyoroti isu kekerasan seksual dan manipulasi narasi korban. Penyelesaian ceritanya
+        dibiarkan terbuka, menegaskan pesan bahwa keadilan tidak selalu berpihak pada kebenaran, terutama
+        ketika berhadapan dengan kekuasaan.
+      </p>
+    </div>
+  
+    <div style="background-color:red; padding:10px 16px; border-radius:6px; display:inline-block;">
+      <a href="../list-film.html" style="color:white; text-decoration:none; font-weight:bold;">
+        Kembali Ke List Film
+      </a>
+    </div>
+  </section>
+  
+      
+    <!-- <h2 class="detail-title">Poster & Still dari Film</h2>
+    <div class="gallery">
+
+<grok-card data-id="261847" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
 
 
-<!-- News Hero -->
-<section class="news-hero fade-section">
-  <div class="news-hero-bg"></div>
-  <div class="news-hero-content">
-    <h1>Film Joko Songo Angkat Kisah Kepahlawanan Pemuda Karanganyar</h1>
-    <div class="news-date">09 Januari 2026</div>
-    <p>Film drama historis lokal yang mengisahkan perjuangan sembilan pemuda melawan penjajah Belanda.</p>
-  </div>
-</section>
 
-<!-- News Detail -->
-<section class="news-detail-section fade-section">
-  <div class="news-content">
-    <p>
-      <strong>Joko Songo</strong> merupakan film bergenre drama historis yang mengangkat kisah kepahlawanan sembilan pemuda asal Karanganyar, Jawa Tengah. Film ini terinspirasi dari peristiwa nyata perjuangan rakyat melawan penjajah Belanda pada masa pasca Proklamasi Kemerdekaan Indonesia.
-    </p>
+<grok-card data-id="01ddef" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
 
-    <p>
-      Judul <em>Joko Songo</em> berasal dari bahasa Jawa yang berarti “Jejaka Sembilan”. Cerita berfokus pada sembilan pemuda yang tergabung dalam pasukan Alap-Alap dan berjuang mempertahankan kemerdekaan pada tahun 1948.
-    </p>
 
-    <p>
-      Latar perjuangan film ini berada di wilayah Kecamatan Karangpandan dan Matesih, Kabupaten Karanganyar. Kedua wilayah tersebut menjadi saksi bisu perjuangan gigih para pemuda dalam menghadapi tentara Belanda.
-    </p>
 
-    <p>
-      Film ini juga menjadi media edukasi sejarah bagi generasi muda, sekaligus bentuk penghormatan terhadap para pejuang yang gugur di kawasan Doplang dan Pablengan. Hingga kini, semangat perjuangan tersebut dikenang melalui Tugu Joko Songo di Kecamatan Matesih.
-    </p>
-  </div>
+<grok-card data-id="6a16ce" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
 
-  <h2 style="font-size:2.5rem; color:#c00; text-align:center; margin:60px 0 40px; text-transform:uppercase;">
-    Galeri Foto Film Joko Songo
-  </h2>
 
-  <div class="news-gallery" style="display:flex; justify-content:center; margin-bottom:40px;">
-    <img 
-      src="../../foto/film1.jpeg" 
-      alt="Film Joko Songo"
-      style="
-        max-width:80%;
-        border-radius:8px;
-        box-shadow:0 4px 12px rgba(0,0,0,0.4);
-      "
-    >
-  </div>
 
-  <div style="background-color:red; padding:10px 16px; border-radius:6px; display:inline-block;">
-    <a href="../list-news.html" style="color:white; text-decoration:none; font-weight:bold;">
-      Kembali Ke News
-    </a>
-</div>
+<grok-card data-id="f002f0" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
 
-</section>
 
+
+<grok-card data-id="f05911" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+    </div>
+
+    <h2 class="detail-title">Monumen Tugu Joko Songo</h2>
+    <div class="gallery">
+
+<grok-card data-id="c2b6d1" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="3fff02" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="2fba90" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="6d199f" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="c964b0" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="a6aadf" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="608217" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="f3e1cd" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+    </div>
+  </section> -->
 
   <script>
     // Hamburger Menu
