@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agak Lain 2 - Nonton Apa?</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: #000;
+      color: #ddd;
+      overflow-x: hidden;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Fade animation */
+    .fade-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10,10,10,0.92);
+      border-bottom: 1px solid #222;
+      z-index: 1000;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #eee;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px #fff;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 1.8rem;
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .nav-menu a {
+      color: #ccc;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: #ff4444;
+      text-shadow: 0 0 10px #ff4444;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      width: 40px;
+      height: 30px;
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #eee;
+      border-radius: 4px;
+      transition: all 0.4s ease;
+    }
+
+    .hamburger span:nth-child(1) { top: 0; }
+    .hamburger span:nth-child(2) { top: 13px; }
+    .hamburger span:nth-child(3) { bottom: 0; }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(9px, -9px);
+    }
+
+    .hamburger:hover span {
+      background: #ff4444;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.98);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5rem;
+      z-index: 999;
+      transform: translateY(-100%);
+      transition: transform 0.5s ease;
+    }
+
+    .mobile-menu.active {
+      transform: translateY(0);
+    }
+
+    .mobile-menu a {
+      color: #ddd;
+      font-size: 2rem;
+      font-weight: bold;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .mobile-menu a:hover {
+      color: #ff4444;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: none;
+      border: none;
+      color: #eee;
+      font-size: 3.5rem;
+      cursor: pointer;
+    }
+
+    /* Page Hero */
+    .page-hero {
+      height: 80vh;
+      min-height: 600px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .page-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 2;
+    }
+
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .page-hero-content h1 {
+      position: relative;
+      z-index: 3;
+      font-size: clamp(4rem, 12vw, 8rem);
+      font-weight: 900;
+      color: #f0f0f0;
+      text-transform: uppercase;
+      text-shadow: 0 0 15px #fff, 0 0 40px #333;
+      animation: glitch 5s infinite alternate;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-3px, 3px); }
+      40% { transform: translate(3px, -3px); }
+      60% { transform: translate(-2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    /* Detail Section */
+    .detail-section {
+      padding: 120px 5% 100px;
+      background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95));
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .detail-content {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #ccc;
+      text-align: justify;
+    }
+
+    .detail-content p {
+      margin-bottom: 20px;
+    }
+
+    .detail-title {
+      font-size: 2.5rem;
+      color: #c00;
+      margin: 30px 0 20px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(180,0,0,0.7);
+      transition: transform 0.4s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-menu { display: none; }
+      .hamburger { display: block; }
+      .navbar { padding: 1rem 6%; }
+      .detail-content { font-size: 1.1rem; }
+      .gallery { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">NONTON APA?</div>
+    <div class="nav-menu">
+      <a href="../../index.html">HOME</a>
+      <a href="../list-film.html" class="active">FILM</a>
+      <a href="../../index.html#news-section">NEWS</a>
+      <a href="#">KESENIAN</a>
+      <a href="#">JADWAL TAYANG</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-btn" id="closeBtn">×</button>
+    <a href="../../index.html">HOME</a>
+    <a href="../list-film.html">FILM</a>
+    <a href="../../index.html#news-section">NEWS</a>
+    <a href="#">KESENIAN</a>
+    <a href="#">JADWAL TAYANG</a>
+  </div>
+
+  <!-- Page Hero dengan Poster Film Utama -->
+  <section class="page-hero fade-section">
+    <div class="page-hero-bg" style="background-image: url('../../foto/film5.jpeg');"></div>
+    <div class="page-hero-content">
+    </div>
+  </section>
+
+  <!-- Detail Section -->
+<!-- Detail Section -->
+<section class="detail-section fade-section">
+  <h2 class="detail-title">Sinopsis</h2>
+  <div class="detail-content">
+    <p>
+      <strong>Agak Laen 2</strong> merupakan film komedi Indonesia yang melanjutkan kisah empat sahabat dengan kekonyolan khas mereka. Setelah kejadian di film pertama, hidup mereka memang berubah, namun bukan berarti menjadi lebih sederhana.
+    </p>
+
+    <p>
+      Upaya mereka untuk menjalani kehidupan yang lebih normal justru kembali membawa mereka ke dalam situasi absurd, penuh kesalahpahaman, dan keputusan ceroboh yang berujung kekacauan. Humor yang disajikan tetap segar, spontan, dan dekat dengan kehidupan sehari-hari.
+    </p>
+
+    <p>
+      Di balik tawa, <strong>Agak Laen 2</strong> juga menyoroti makna persahabatan, tanggung jawab, dan konsekuensi dari setiap pilihan. Film ini tidak hanya menghibur, tetapi juga mengajak penonton tertawa sambil bercermin pada realita hidup orang biasa.
+    </p>
+  </div>
+
+
+    <div style="background-color:red; padding:10px 16px; border-radius:6px; display:inline-block;">
+        <a href="../list-film.html" style="color:white; text-decoration:none; font-weight:bold;">
+          Kembali Ke List Film
+        </a>
+    </div>
+      
+    <!-- <h2 class="detail-title">Poster & Still dari Film</h2>
+    <div class="gallery">
+
+<grok-card data-id="261847" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="01ddef" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="6a16ce" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="f002f0" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="f05911" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+    </div>
+
+    <h2 class="detail-title">Monumen Tugu Joko Songo</h2>
+    <div class="gallery">
+
+<grok-card data-id="c2b6d1" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="3fff02" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="2fba90" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="6d199f" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="c964b0" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="a6aadf" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="608217" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+
+
+<grok-card data-id="f3e1cd" data-type="image_card"  data-arg-size="LARGE" ></grok-card>
+
+    </div>
+  </section> -->
+
+  <script>
+    // Hamburger Menu
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeBtn = document.getElementById('closeBtn');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+
+    closeBtn.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+    });
+
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      }
+    });
+
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      });
+    });
+
+    // Fade-in sections
+    const fadeSections = document.querySelectorAll('.fade-section');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        entry.target.classList.toggle('visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.15 });
+
+    fadeSections.forEach(s => fadeObserver.observe(s));
+  </script>
+</body>
+</html>
