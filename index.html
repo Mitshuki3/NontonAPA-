@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ABADI NAN JAYA - Nonton Apa?</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: #000;
+      color: #ddd;
+      overflow-x: hidden;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Fade animation */
+    .fade-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10,10,10,0.92);
+      border-bottom: 1px solid #222;
+      z-index: 1000;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #eee;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px #fff;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 1.8rem;
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .nav-menu a {
+      color: #ccc;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: #ff4444;
+      text-shadow: 0 0 10px #ff4444;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      width: 40px;
+      height: 30px;
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #eee;
+      border-radius: 4px;
+      transition: all 0.4s ease;
+    }
+
+    .hamburger span:nth-child(1) { top: 0; }
+    .hamburger span:nth-child(2) { top: 13px; }
+    .hamburger span:nth-child(3) { bottom: 0; }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(9px, -9px);
+    }
+
+    .hamburger:hover span {
+      background: #ff4444;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.98);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5rem;
+      z-index: 999;
+      transform: translateY(-100%);
+      transition: transform 0.5s ease;
+    }
+
+    .mobile-menu.active {
+      transform: translateY(0);
+    }
+
+    .mobile-menu a {
+      color: #ddd;
+      font-size: 2rem;
+      font-weight: bold;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .mobile-menu a:hover {
+      color: #ff4444;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: none;
+      border: none;
+      color: #eee;
+      font-size: 3.5rem;
+      cursor: pointer;
+    }
+
+    /* Hero */
+    .hero {
+      height: 100vh;
+      min-height: 600px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+      z-index: 1;
+    }
+
+    .slide-bg.active {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 3;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 4;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(3.5rem, 12vw, 8rem);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -6px;
+      color: #f0f0f0;
+      text-transform: uppercase;
+      text-shadow: 0 0 15px #fff, 0 0 40px #333;
+      animation: glitch 5s infinite alternate;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-3px, 3px); }
+      40% { transform: translate(3px, -3px); }
+      60% { transform: translate(-2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    /* Section umum */
+    .section {
+      padding: 100px 5% 80px;
+      background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95));
+    }
+
+    .section-title {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 900;
+      color: #f0f0f0;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+      text-shadow: 0 0 15px #fff;
+      animation: glitch 6s infinite alternate;
+    }
+
+    /* Film Grid */
+    .film-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .film-card {
+      background: rgba(20,20,20,0.92);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.4s ease;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+
+    .film-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(180,0,0,0.3);
+    }
+
+    .film-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .film-info {
+      padding: 15px;
+    }
+
+    .card-title {
+      font-size: 1.6rem;
+      color: #c00;
+      margin-bottom: 8px;
+    }
+
+    .card-more {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 16px;
+      background: #c00;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 0.9rem;
+    }
+
+    .card-more:hover {
+      background: #ff4444;
+    }
+
+    /* News Grid */
+    .news-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .news-big, .news-small {
+      background: rgba(20,20,20,0.92);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .news-big img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .news-info {
+      padding: 20px;
+    }
+
+    .news-title {
+      font-size: 1.8rem;
+      color: #c00;
+      margin-bottom: 10px;
+    }
+
+    .section-more {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .section-more a {
+      padding: 12px 25px;
+      background: #c00;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+    }
+
+    .section-more a:hover {
+      background: #ff4444;
+    }
+
+    /* Social Sidebar */
+    .social-box {
+      position: fixed;
+      top: 50%;
+      right: 15px;
+      transform: translateY(-50%);
+      background: rgba(15,15,15,0.9);
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 999;
+      box-shadow: 0 0 15px rgba(0,0,0,0.8);
+    }
+
+    .social-box a {
+      color: #ddd;
+      font-size: 1.6rem;
+      transition: all 0.3s;
+    }
+
+    .social-box a:hover {
+      color: #fff;
+      transform: scale(1.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-menu { display: none; }
+      .hamburger { display: block; }
+      .navbar { padding: 1rem 6%; }
+      .social-box { right: 10px; padding: 10px 8px; }
+      .social-box a { font-size: 1.4rem; }
+      .section { padding: 80px 6% 60px; }
+      .news-grid { grid-template-columns: 1fr; }
+      .news-big img { height: 180px; }
+      .film-card img { height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">NONTON APA?</div>
+    <div class="nav-menu">
+      <a href="#hero" class="active">HOME</a>
+      <a href="#film-section">FILM</a>
+      <a href="#news-section">NEWS</a>
+      <a href="#">KESENIAN</a>
+      <a href="#">JADWAL TAYANG</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-btn" id="closeBtn">×</button>
+    <a href="#hero">HOME</a>
+    <a href="#film-section">FILM</a>
+    <a href="#news-section">NEWS</a>
+    <a href="#">KESENIAN</a>
+    <a href="#">JADWAL TAYANG</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero fade-section" id="hero">
+    <div class="slide-bg" style="background-image: url('foto1.jpeg');"></div>
+    <div class="slide-bg" style="background-image: url('foto2.jpeg');"></div>
+    <div class="hero-content">
+      <!-- Bisa tambah teks hero di sini jika perlu -->
+    </div>
+  </section>
+
+  <!-- Film Section -->
+  <section class="section fade-section" id="film-section">
+    <h2 class="section-title">FILM</h2>
+    <div class="film-grid">
+      <div class="film-card">
+        <img src="film1.jpeg" alt="Joko Songo">
+        <div class="film-info">
+          <h3 class="card-title">JOKO SONGO</h3>
+          <a href="list-film.html" class="card-more">Selengkapnya →</a>
+        </div>
+      </div>
+      <div class="film-card">
+        <img src="film2.jpeg" alt="Abadi Nan Jaya">
+        <div class="film-info">
+          <h3 class="card-title">ABADI NAN JAYA</h3>
+          <a href="list-film.html" class="card-more">Selengkapnya →</a>
+        </div>
+      </div>
+      <div class="film-card">
+        <img src="film3.jpeg" alt="Sangu">
+        <div class="film-info">
+          <h3 class="card-title">SANGU</h3>
+          <a href="list-film.html" class="card-more">Selengkapnya →</a>
+        </div>
+      </div>
+      <div class="film-card">
+        <img src="film4.jpeg" alt="Avatar">
+        <div class="film-info">
+          <h3 class="card-title">AVATAR: FIRE AND ASH</h3>
+          <a href="list-film.html" class="card-more">Selengkapnya →</a>
+        </div>
+      </div>
+    </div>
+    <div class="section-more">
+      <a href="list-film.html">Lihat Semua Film →</a>
+    </div>
+  </section>
+
+  <!-- News Section -->
+  <section class="section fade-section" id="news-section">
+    <h2 class="section-title">NEWS</h2>
+    <div class="news-grid">
+      <div class="news-big">
+        <img src="news1.jpeg" alt="Avatar">
+        <div class="news-info">
+          <h3 class="news-title"><strong>Dominasi Avatar di Bioskop Awal 2026</strong></h3>
+          <p class="news-excerpt">Avatar: Fire and Ash tembus $1 miliar dalam 18 hari...</p>
+          <span class="news-more">Selengkapnya →</span>
+        </div>
+      </div>
+      <div>
+        <div class="news-small">
+          <h3 class="news-title"><strong>SANGU - Mendengarkan dengan Telinga Hati</strong></h3>
+          <span class="news-more">Selengkapnya →</span>
+        </div>
+        <br>
+        <div class="news-small">
+          <h3 class="news-title"><strong>Abadi Nan Jaya Tayang Netflix</strong></h3>
+          <span class="news-more">Selengkapnya →</span>
+        </div>
+        <br>
+        <div class="news-small">
+          <h3 class="news-title"><strong>Festival Film Pendek Karanganyar 2026</strong></h3>
+          <span class="news-more">Selengkapnya →</span>
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="section-more">
+      <a href="list-news.html">Lihat Semua News →</a>
+    </div>
+  </section>
+
+  <!-- Social Box -->
+  <div class="social-box">
+    <a href="#" title="Instagram">📷</a>
+    <a href="#" title="WhatsApp">💬</a>
+    <a href="#" title="Email">✉️</a>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // === ACTIVE NAV LINK BERDASARKAN SECTION ===
+    const navLinks = document.querySelectorAll('.nav-menu a');
+
+    const sectionIds = ['hero', 'film-section', 'news-section'];
+    const sections = sectionIds
+      .map(id => document.getElementById(id))
+      .filter(section => section !== null);
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-120px 0px -50% 0px', // disesuaikan agar lebih responsif
+      threshold: 0.25
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          const id = entry.target.getAttribute('id');
+          const activeLink = document.querySelector(`.nav-menu a[href="#${id}"]`);
+          if (activeLink) activeLink.classList.add('active');
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => sectionObserver.observe(section));
+
+    // Klik link → update active + smooth scroll
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+
+        const targetId = this.getAttribute('href').substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Hamburger + Mobile Menu
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeBtn = document.getElementById('closeBtn');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+
+    closeBtn.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+    });
+
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      }
+    });
+
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+
+        const targetId = link.getAttribute('href').substring(1);
+        const target = document.getElementById(targetId);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Fade-in sections
+    const fadeSections = document.querySelectorAll('.fade-section');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        entry.target.classList.toggle('visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.15 });
+
+    fadeSections.forEach(s => fadeObserver.observe(s));
+
+    // Hero slideshow
+    const hero = document.getElementById('hero');
+    const slides = hero.querySelectorAll('.slide-bg');
+    let current = 0;
+
+    function nextSlide() {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }
+
+    window.addEventListener('load', () => {
+      if (slides.length) {
+        slides[0].classList.add('active');
+        setInterval(nextSlide, 8000);
+      }
+    });
+  </script>
+</body>
+</html>
